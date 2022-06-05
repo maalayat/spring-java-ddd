@@ -1,6 +1,7 @@
 package ec.solmedia.app.mooc.controller.courses;
 
 import ec.solmedia.mooc.courses.application.create.CourseCreator;
+import ec.solmedia.mooc.courses.application.create.CourseCreateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,8 @@ public class CoursesPutController {
 
   @PutMapping("/courses/{id}")
   public ResponseEntity<Object> create(@PathVariable String id, @RequestBody Request request) {
-    creator.create(id, request.getName(), request.getDuration());
+    creator.create(new CourseCreateRequest(id, request.getName(), request.getDuration()));
+
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 

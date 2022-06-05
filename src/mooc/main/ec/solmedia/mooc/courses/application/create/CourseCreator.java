@@ -1,6 +1,7 @@
 package ec.solmedia.mooc.courses.application.create;
 
 import ec.solmedia.mooc.courses.domain.Course;
+import ec.solmedia.mooc.courses.domain.CourseCreateRequest;
 import ec.solmedia.mooc.courses.domain.CourseRepository;
 import ec.solmedia.shared.domain.Service;
 
@@ -13,10 +14,9 @@ public final class CourseCreator {
     this.repository = repository;
   }
 
-  public void create(String id, String name, String duration) {
-    final var course = new Course(id, name, duration);
+  public void create(CourseCreateRequest request) {
+    final var course = new Course(request.getId(), request.getName(), request.getDuration());
 
     repository.save(course);
-
   }
 }
