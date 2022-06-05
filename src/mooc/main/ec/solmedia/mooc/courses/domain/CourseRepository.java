@@ -6,5 +6,5 @@ public interface CourseRepository {
 
   void save(Course course);
 
-  Optional<Course> search(String courseId);
+  Optional<Course> search(CourseId courseId);
 }

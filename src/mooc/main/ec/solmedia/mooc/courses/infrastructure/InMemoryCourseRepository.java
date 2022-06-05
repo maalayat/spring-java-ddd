@@ -1,6 +1,7 @@
 package ec.solmedia.mooc.courses.infrastructure;
 
 import ec.solmedia.mooc.courses.domain.Course;
+import ec.solmedia.mooc.courses.domain.CourseId;
 import ec.solmedia.mooc.courses.domain.CourseRepository;
 import ec.solmedia.shared.domain.Service;
 import java.util.HashMap;
@@ -14,11 +15,11 @@ public class InMemoryCourseRepository implements CourseRepository {
 
   @Override
   public void save(Course course) {
-    courses.put(course.getId(), course);
+    courses.put(course.id().value(), course);
   }
 
   @Override
-  public Optional<Course> search(String courseId) {
-    return Optional.ofNullable(courses.get(courseId));
+  public Optional<Course> search(CourseId courseId) {
+    return Optional.ofNullable(courses.get(courseId.value()));
   }
 }

@@ -1,7 +1,5 @@
 package ec.solmedia.mooc.courses.application.create;
 
-import java.util.Objects;
-
 public final class CourseCreateRequest {
 
   private final String id;
@@ -14,33 +12,15 @@ public final class CourseCreateRequest {
     this.duration = duration;
   }
 
-  public String getId() {
+  public String id() {
     return id;
   }
 
-  public String getName() {
+  public String name() {
     return name;
   }
 
-  public String getDuration() {
+  public String duration() {
     return duration;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    CourseCreateRequest course = (CourseCreateRequest) o;
-    return Objects.equals(id, course.id) && Objects.equals(name, course.name)
-        && Objects.equals(duration, course.duration);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, duration);
   }
 }

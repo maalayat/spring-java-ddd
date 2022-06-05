@@ -4,25 +4,25 @@ import java.util.Objects;
 
 public final class Course {
 
-  private final String id;
-  private final String name;
-  private final String duration;
+  private final CourseId id;
+  private final CourseName name;
+  private final CourseDuration duration;
 
-  public Course(String id, String name, String duration) {
+  public Course(CourseId id, CourseName name, CourseDuration duration) {
     this.id = id;
     this.name = name;
     this.duration = duration;
   }
 
-  public String getId() {
+  public CourseId id() {
     return id;
   }
 
-  public String getName() {
+  public CourseName name() {
     return name;
   }
 
-  public String getDuration() {
+  public CourseDuration duration() {
     return duration;
   }
 
@@ -35,8 +35,7 @@ public final class Course {
       return false;
     }
     Course course = (Course) o;
-    return Objects.equals(id, course.id) && Objects.equals(name, course.name)
-        && Objects.equals(duration, course.duration);
+    return id.equals(course.id) && name.equals(course.name) && duration.equals(course.duration);
   }
 
   @Override
