@@ -17,10 +17,10 @@ allprojects {
     implementation 'com.vlkan.log4j2:log4j2-logstash-layout:0.19'
 
     // Test
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.2'
-    testCompile "org.mockito:mockito-core:2.+"
-    testCompile 'com.github.javafaker:javafaker:1.0.2'
-    testCompile 'com.github.javafaker:javafaker:1.0.2:javadoc'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
+    testImplementation "org.mockito:mockito-core:2.+"
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2:javadoc'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
   }
 
@@ -62,9 +62,15 @@ subprojects {
   }
 
   dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testImplementation rootProject.sourceSets.main.output
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    if (project.name != "shared") {
+      implementation project(":shared")
+      testImplementation project(":shared").sourceSets.test.output
+    }
   }
 
   bootJar {
@@ -108,12 +114,12 @@ bootJar {
 mainClassName = 'ec.solmedia.app.Starter'
 
 dependencies {
-  compile("org.springframework.boot:spring-boot-starter-web")
+  implementation("org.springframework.boot:spring-boot-starter-web")
 
 //  implementation project(":shared")
   implementation project(":backoffice")
   implementation project(":mooc")
 
-  testCompile("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
