@@ -13,15 +13,16 @@ allprojects {
 
   dependencies {
     // Prod
-    implementation 'org.apache.logging.log4j:log4j-core:2.12.1'
-    implementation 'com.vlkan.log4j2:log4j2-logstash-layout:0.19'
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
+    implementation 'com.vlkan.log4j2:log4j2-logstash-layout:1.0.5'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     // Test
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
-    testImplementation "org.mockito:mockito-core:2.+"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'com.github.javafaker:javafaker:1.0.2:javadoc'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
   }
 
   test {
@@ -65,7 +66,6 @@ subprojects {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     testImplementation rootProject.sourceSets.main.output
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     if (project.name != "shared") {
       implementation project(":shared")
@@ -88,7 +88,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.18.RELEASE")
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.7")
   }
 }
 
@@ -116,10 +116,9 @@ mainClassName = 'ec.solmedia.app.Starter'
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-web")
 
-//  implementation project(":shared")
+  implementation project(":shared")
   implementation project(":backoffice")
   implementation project(":mooc")
 
-  testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
