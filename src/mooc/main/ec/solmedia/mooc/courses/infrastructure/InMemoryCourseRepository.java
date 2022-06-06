@@ -3,12 +3,12 @@ package ec.solmedia.mooc.courses.infrastructure;
 import ec.solmedia.mooc.courses.domain.Course;
 import ec.solmedia.mooc.courses.domain.CourseId;
 import ec.solmedia.mooc.courses.domain.CourseRepository;
-import ec.solmedia.shared.domain.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class InMemoryCourseRepository implements CourseRepository {
 
   private final Map<String, Course> courses = new HashMap<>();

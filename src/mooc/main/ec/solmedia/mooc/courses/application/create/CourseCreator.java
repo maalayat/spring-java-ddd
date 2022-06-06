@@ -5,7 +5,7 @@ import ec.solmedia.mooc.courses.domain.CourseDuration;
 import ec.solmedia.mooc.courses.domain.CourseId;
 import ec.solmedia.mooc.courses.domain.CourseName;
 import ec.solmedia.mooc.courses.domain.CourseRepository;
-import ec.solmedia.shared.domain.Service;
+import org.springframework.stereotype.Service;
 
 @Service
 public final class CourseCreator {
