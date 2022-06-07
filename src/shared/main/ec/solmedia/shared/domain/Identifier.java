@@ -20,6 +20,10 @@ public abstract class Identifier implements Serializable {
     return value;
   }
 
+  public String getValue() {
+    return value;
+  }
+
   private UUID ensureValidUuid(String value) throws IllegalArgumentException {
     return UUID.fromString(value);
   }

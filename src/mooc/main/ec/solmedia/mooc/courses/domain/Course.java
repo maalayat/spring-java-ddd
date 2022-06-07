@@ -26,6 +26,18 @@ public final class Course {
     return duration;
   }
 
+  public CourseId getId() {
+    return id;
+  }
+
+  public CourseName getName() {
+    return name;
+  }
+
+  public CourseDuration getDuration() {
+    return duration;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

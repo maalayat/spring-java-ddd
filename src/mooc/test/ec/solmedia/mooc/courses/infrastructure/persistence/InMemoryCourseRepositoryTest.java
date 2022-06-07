@@ -1,4 +1,4 @@
-package ec.solmedia.mooc.courses.infrastructure;
+package ec.solmedia.mooc.courses.infrastructure.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

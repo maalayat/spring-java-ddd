@@ -1,4 +1,4 @@
-package ec.solmedia.mooc.courses.infrastructure;
+package ec.solmedia.mooc.courses.infrastructure.persistence;
 
 import ec.solmedia.mooc.courses.domain.Course;
 import ec.solmedia.mooc.courses.domain.CourseId;
