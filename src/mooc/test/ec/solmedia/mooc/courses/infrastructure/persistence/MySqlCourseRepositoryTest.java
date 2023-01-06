@@ -10,7 +10,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class InMemoryCourseRepositoryTest extends CoursesModuleInfrastructureTestCase {
+class MySqlCourseRepositoryTest extends CoursesModuleInfrastructureTestCase {
 
   @Test
   @DisplayName("Save a course")

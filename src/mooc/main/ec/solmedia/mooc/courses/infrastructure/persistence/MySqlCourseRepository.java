@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 
 @Primary
 @Repository
-public class H2CourseRepository implements CourseRepository {
+public class MySqlCourseRepository implements CourseRepository {
 
   private final CourseRepositoryImpl repository;
   private final CourseMapper mapper;
 
-  public H2CourseRepository(CourseRepositoryImpl repository, CourseMapper mapper) {
+  public MySqlCourseRepository(CourseRepositoryImpl repository, CourseMapper mapper) {
     this.repository = repository;
     this.mapper = mapper;
   }
