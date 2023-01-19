@@ -6,6 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ec.solmedia.shared.domain.event.bus.DomainEvent;
+import ec.solmedia.shared.domain.event.bus.EventBus;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +21,9 @@ public abstract class ApplicationTestCase {
 
   @Autowired
   private MockMvc mockMvc;
+
+  @Autowired
+  private EventBus eventBus;
 
   public void assertResponse(
       String endpoint, Integer expectedStatusCode, String expectedResponse) throws Exception {
@@ -38,5 +44,9 @@ public abstract class ApplicationTestCase {
             .contentType(APPLICATION_JSON))
         .andExpect(status().is(expectedStatusCode))
         .andExpect(content().string(""));
+  }
+
+  protected void givenISendAnEventToTheBus(DomainEvent<?>... domainEvent) {
+    eventBus.publish(Arrays.asList(domainEvent));
   }
 }
