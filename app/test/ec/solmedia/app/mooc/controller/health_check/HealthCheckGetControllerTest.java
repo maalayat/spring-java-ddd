@@ -1,10 +1,10 @@
 package ec.solmedia.app.mooc.controller.health_check;
 
-import ec.solmedia.app.mooc.controller.RequestTestCase;
+import ec.solmedia.app.mooc.controller.ApplicationTestCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-final class HealthCheckGetControllerTest extends RequestTestCase {
+final class HealthCheckGetControllerTest extends ApplicationTestCase {
 
   @Test
   @DisplayName("Check the app is working ok")

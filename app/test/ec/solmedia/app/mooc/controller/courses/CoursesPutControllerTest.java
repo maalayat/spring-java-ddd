@@ -1,10 +1,10 @@
 package ec.solmedia.app.mooc.controller.courses;
 
-import ec.solmedia.app.mooc.controller.RequestTestCase;
+import ec.solmedia.app.mooc.controller.ApplicationTestCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public final class CoursesPutControllerTest extends RequestTestCase {
+public final class CoursesPutControllerTest extends ApplicationTestCase {
 
   @Test
   @DisplayName("Create a valid non exists course")
