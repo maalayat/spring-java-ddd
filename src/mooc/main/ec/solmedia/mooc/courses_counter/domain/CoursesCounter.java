@@ -1,6 +1,7 @@
 package ec.solmedia.mooc.courses_counter.domain;
 
 import ec.solmedia.mooc.courses.domain.CourseId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ public final class CoursesCounter {
     return new CoursesCounter(
         new CoursesCounterId(id),
         CoursesCounterTotal.initialize(),
-        List.of()
+        new ArrayList<>()
     );
   }
 

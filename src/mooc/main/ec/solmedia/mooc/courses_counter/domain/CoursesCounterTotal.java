@@ -9,7 +9,7 @@ public final class CoursesCounterTotal extends IntValueObject {
   }
 
   public static CoursesCounterTotal initialize() {
-    return new CoursesCounterTotal(1);
+    return new CoursesCounterTotal(0);
   }
 
   public CoursesCounterTotal increment() {
