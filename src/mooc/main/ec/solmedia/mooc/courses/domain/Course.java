@@ -1,8 +1,9 @@
 package ec.solmedia.mooc.courses.domain;
 
+import ec.solmedia.shared.domain.AggregateRoot;
 import java.util.Objects;
 
-public final class Course {
+public final class Course extends AggregateRoot {
 
   private final CourseId id;
   private final CourseName name;
@@ -12,6 +13,8 @@ public final class Course {
     this.id = id;
     this.name = name;
     this.duration = duration;
+
+    this.record(new CourseCreatedDomainEvent(id.value()));
   }
 
   public CourseId id() {
