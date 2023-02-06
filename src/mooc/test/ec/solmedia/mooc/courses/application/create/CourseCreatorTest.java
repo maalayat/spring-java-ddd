@@ -1,9 +1,7 @@
 package ec.solmedia.mooc.courses.application.create;
 
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.verify;
-
 import ec.solmedia.mooc.courses.CoursesModuleUnitTestCase;
+import ec.solmedia.mooc.courses.domain.CourseCreatedDomainEventMother;
 import ec.solmedia.mooc.courses.domain.CourseMother;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,13 +9,16 @@ import org.junit.jupiter.api.Test;
 class CourseCreatorTest extends CoursesModuleUnitTestCase {
 
   @Test
-  @DisplayName("Save a valid course")
-  void saveValidCourse() {
+  @DisplayName("Given a course creator request when create a valid course then an event occurs")
+  void shouldCreateAValidCourse() {
     final var request = CourseCreateRequestMother.random();
+
     final var course = CourseMother.fromRequest(request);
+    final var domainEvent = CourseCreatedDomainEventMother.fromCourse(course);
 
     creator.create(request);
 
-    verify(repository, atLeastOnce()).save(course);
+    shouldHaveSaved(course);
+    shouldHavePublished(domainEvent);
   }
 }
