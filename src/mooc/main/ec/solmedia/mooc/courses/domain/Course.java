@@ -14,7 +14,7 @@ public final class Course extends AggregateRoot {
     this.name = name;
     this.duration = duration;
 
-    this.record(new CourseCreatedDomainEvent(id.value()));
+    this.record(new CourseCreatedDomainEvent(id.value(), name.value(), duration.value()));
   }
 
   public CourseId id() {
