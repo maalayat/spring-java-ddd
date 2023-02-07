@@ -8,4 +8,12 @@ public class CourseCreatedDomainEventMother {
         course.name().value(),
         course.duration().value());
   }
+
+  public static CourseCreatedDomainEvent random() {
+    return new CourseCreatedDomainEvent(
+        CourseIdMother.random().value(),
+        CourseNameMother.random().value(),
+        CourseDurationMother.random().value()
+    );
+  }
 }

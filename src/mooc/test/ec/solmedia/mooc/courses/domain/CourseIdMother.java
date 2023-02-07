@@ -8,4 +8,7 @@ public final class CourseIdMother {
     return new CourseId(UuidMother.random());
   }
 
+  public static CourseId create(String aggregateId) {
+    return new CourseId(aggregateId);
+  }
 }
