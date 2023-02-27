@@ -1,4 +1,4 @@
-package ec.solmedia.shared.infrastructure;
+package ec.solmedia.shared.infrastructure.bus.event.spring;
 
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import ec.solmedia.shared.domain.event.bus.EventBus;
