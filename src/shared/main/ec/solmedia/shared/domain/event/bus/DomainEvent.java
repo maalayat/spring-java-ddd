@@ -3,7 +3,7 @@ package ec.solmedia.shared.domain.event.bus;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public abstract class DomainEvent<T extends DomainEvent<?>> {
+public abstract class DomainEvent {
 
   private final String aggregateId;
   private final String eventId;

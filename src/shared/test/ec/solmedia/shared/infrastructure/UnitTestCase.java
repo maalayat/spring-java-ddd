@@ -21,7 +21,7 @@ public abstract class UnitTestCase {
   @Mock
   protected UuidGenerator uuidGenerator;
 
-  protected void shouldHavePublished(DomainEvent<?> domainEvents) {
+  protected void shouldHavePublished(DomainEvent domainEvents) {
     verify(eventBus, atLeastOnce()).publish(Collections.singletonList(domainEvents));
   }
 

@@ -3,7 +3,7 @@ package ec.solmedia.mooc.courses.domain;
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import java.util.Objects;
 
-public final class CourseCreatedDomainEvent extends DomainEvent<CourseCreatedDomainEvent> {
+public final class CourseCreatedDomainEvent extends DomainEvent {
 
   private final String name;
   private final String duration;
