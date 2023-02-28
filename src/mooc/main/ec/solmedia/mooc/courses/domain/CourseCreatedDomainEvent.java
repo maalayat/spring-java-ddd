@@ -1,6 +1,8 @@
 package ec.solmedia.mooc.courses.domain;
 
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Objects;
 
 public final class CourseCreatedDomainEvent extends DomainEvent {
@@ -14,9 +16,42 @@ public final class CourseCreatedDomainEvent extends DomainEvent {
     this.duration = duration;
   }
 
+  public CourseCreatedDomainEvent(
+      String aggregateId,
+      String eventId,
+      String occurredOn,
+      String name,
+      String duration
+  ) {
+    super(aggregateId, eventId, occurredOn);
+
+    this.name = name;
+    this.duration = duration;
+  }
+
   @Override
-  protected String eventName() {
+  public String eventName() {
     return "course.created";
+  }
+
+  @Override
+  public HashMap<String, Serializable> toPrimitives() {
+    return new HashMap<>() {{
+      put("name", name);
+      put("duration", duration);
+    }};
+  }
+
+  @Override
+  public DomainEvent fromPrimitives(String aggregateId, HashMap<String, Serializable> body,
+      String eventId, String occurredOn) {
+    return new CourseCreatedDomainEvent(
+        aggregateId,
+        eventId,
+        occurredOn,
+        (String) body.get("name"),
+        (String) body.get("duration")
+    );
   }
 
   @Override
