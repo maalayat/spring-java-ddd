@@ -1,11 +1,12 @@
 package ec.solmedia.mooc.courses.domain;
 
+import ec.solmedia.shared.domain.JsonUtil;
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
 
-public final class CourseCreatedDomainEvent extends DomainEvent {
+public final class CourseCreatedDomainEvent extends DomainEvent implements Serializable {
 
   private final String name;
   private final String duration;
@@ -36,10 +37,26 @@ public final class CourseCreatedDomainEvent extends DomainEvent {
 
   @Override
   public HashMap<String, Serializable> toPrimitives() {
-    return new HashMap<>() {{
-      put("name", name);
-      put("duration", duration);
-    }};
+    return new HashMap<>() {
+      private static final long serialVersionUID = 4502342479399376802L;
+
+      {
+        put("name", name);
+        put("duration", duration);
+      }
+    };
+  }
+
+  @Override
+  public String toJson() {
+    final var map = new HashMap<String, Serializable>() {
+      {
+        put("name", name);
+        put("duration", duration);
+      }
+    };
+
+    return JsonUtil.encode(map);
   }
 
   @Override

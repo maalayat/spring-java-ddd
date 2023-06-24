@@ -25,8 +25,8 @@ public abstract class ApplicationTestCase {
   @Autowired
   private EventBus eventBus;
 
-  public void assertResponse(
-      String endpoint, Integer expectedStatusCode, String expectedResponse) throws Exception {
+  public void assertResponse(String endpoint, Integer expectedStatusCode, String expectedResponse)
+      throws Exception {
     final var response = expectedResponse.isEmpty()
         ? content().string("")
         : content().json(expectedResponse);
@@ -37,8 +37,8 @@ public abstract class ApplicationTestCase {
         .andExpect(response);
   }
 
-  public void assertRequestWithBody(
-      String method, String endpoint, String body, Integer expectedStatusCode) throws Exception {
+  public void assertRequestWithBody(String method, String endpoint, String body,
+      Integer expectedStatusCode) throws Exception {
     mockMvc
         .perform(request(HttpMethod.valueOf(method), endpoint).content(body)
             .contentType(APPLICATION_JSON))

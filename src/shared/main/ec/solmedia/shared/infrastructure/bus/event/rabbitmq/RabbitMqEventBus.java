@@ -3,6 +3,8 @@ package ec.solmedia.shared.infrastructure.bus.event.rabbitmq;
 import ec.solmedia.shared.domain.Service;
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import ec.solmedia.shared.domain.event.bus.EventBus;
+import ec.solmedia.shared.infrastructure.bus.event.mysql.MySqlEventBus;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.amqp.AmqpException;
 import org.springframework.context.annotation.Primary;
@@ -12,10 +14,12 @@ import org.springframework.context.annotation.Primary;
 public class RabbitMqEventBus implements EventBus {
 
   private final RabbitMqPublisher publisher;
+  private final MySqlEventBus failoverPublisher;
   private final String exchangeName;
 
-  public RabbitMqEventBus(RabbitMqPublisher publisher) {
+  public RabbitMqEventBus(RabbitMqPublisher publisher, MySqlEventBus mySqlEventBus) {
     this.publisher = publisher;
+    this.failoverPublisher = mySqlEventBus;
     this.exchangeName = "domain_events";
   }
 
@@ -28,8 +32,7 @@ public class RabbitMqEventBus implements EventBus {
     try {
       publisher.publish(domainEvent, exchangeName);
     } catch (AmqpException exception) {
-      // TODO failover
+      failoverPublisher.publish(Collections.singletonList(domainEvent));
     }
-
   }
 }

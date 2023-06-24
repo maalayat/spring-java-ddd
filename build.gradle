@@ -36,6 +36,9 @@ allprojects {
     // RabbitMq
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
+    // Hibernate-types
+    implementation 'com.vladmihalcea:hibernate-types-55:2.21.1'
+
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
