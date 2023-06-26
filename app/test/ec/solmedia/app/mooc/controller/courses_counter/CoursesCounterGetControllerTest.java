@@ -2,6 +2,8 @@ package ec.solmedia.app.mooc.controller.courses_counter;
 
 import ec.solmedia.app.mooc.controller.ApplicationTestCase;
 import ec.solmedia.mooc.courses.domain.CourseCreatedDomainEvent;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.DirtiesContext;
@@ -22,7 +24,7 @@ public class CoursesCounterGetControllerTest extends ApplicationTestCase {
             "Clean code",
             "4 days")
     );
-
+    new CountDownLatch(1).await(500, TimeUnit.MILLISECONDS);
     assertResponse("/courses-counter", 200, "{'total': 2}");
   }
 
@@ -55,7 +57,7 @@ public class CoursesCounterGetControllerTest extends ApplicationTestCase {
             "Domain-Driven Design in PHP",
             "7 days")
     );
-
+    new CountDownLatch(1).await(500, TimeUnit.MILLISECONDS);
     assertResponse("/courses-counter", 200, "{'total': 3}");
   }
 }

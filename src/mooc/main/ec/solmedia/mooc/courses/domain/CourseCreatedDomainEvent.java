@@ -11,6 +11,13 @@ public final class CourseCreatedDomainEvent extends DomainEvent implements Seria
   private final String name;
   private final String duration;
 
+  public CourseCreatedDomainEvent() {
+    super(null);
+
+    this.name = null;
+    this.duration = null;
+  }
+
   public CourseCreatedDomainEvent(String aggregateId, String name, String duration) {
     super(aggregateId);
     this.name = name;

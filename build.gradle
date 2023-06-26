@@ -39,6 +39,12 @@ allprojects {
     // Hibernate-types
     implementation 'com.vladmihalcea:hibernate-types-55:2.21.1'
 
+    // Reflections
+    implementation 'org.reflections:reflections:0.10.2'
+
+    // Guava
+    implementation 'com.google.guava:guava:31.1-jre'
+
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
