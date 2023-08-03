@@ -1,12 +1,14 @@
 package ec.solmedia.mooc.courses.application.create;
 
-public final class CourseCreateRequest {
+import ec.solmedia.shared.domain.command.Command;
+
+public final class CourseCreateCommand implements Command {
 
   private final String id;
   private final String name;
   private final String duration;
 
-  public CourseCreateRequest(String id, String name, String duration) {
+  public CourseCreateCommand(String id, String name, String duration) {
     this.id = id;
     this.name = name;
     this.duration = duration;

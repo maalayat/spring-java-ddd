@@ -11,12 +11,12 @@ class CourseCreatorTest extends CoursesModuleUnitTestCase {
   @Test
   @DisplayName("Given a course creator request when create a valid course then an event occurs")
   void shouldCreateAValidCourse() {
-    final var request = CourseCreateRequestMother.random();
+    final var command = CourseCreateCommandMother.random();
 
-    final var course = CourseMother.fromRequest(request);
+    final var course = CourseMother.fromCommand(command);
     final var domainEvent = CourseCreatedDomainEventMother.fromCourse(course);
 
-    creator.create(request);
+    handler.handle(command);
 
     shouldHaveSaved(course);
     shouldHavePublished(domainEvent);

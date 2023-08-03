@@ -19,11 +19,8 @@ public final class CourseCreator {
     this.eventBus = eventBus;
   }
 
-  public void create(CourseCreateRequest request) {
-    final var course = new Course(
-        new CourseId(request.id()),
-        new CourseName(request.name()),
-        new CourseDuration(request.duration()));
+  public void create(CourseId courseId, CourseName courseName, CourseDuration courseDuration) {
+    final var course = new Course(courseId, courseName, courseDuration);
 
     repository.save(course);
     eventBus.publish(course.pullDomainEvents());

@@ -1,6 +1,6 @@
 package ec.solmedia.mooc.courses.domain;
 
-import ec.solmedia.mooc.courses.application.create.CourseCreateRequest;
+import ec.solmedia.mooc.courses.application.create.CourseCreateCommand;
 
 public final class CourseMother {
 
@@ -11,7 +11,7 @@ public final class CourseMother {
         CourseDurationMother.random());
   }
 
-  public static Course fromRequest(CourseCreateRequest request) {
+  public static Course fromCommand(CourseCreateCommand request) {
     return new Course(
         new CourseId(request.id()),
         new CourseName(request.name()),
