@@ -16,6 +16,8 @@ public final class CoursesCounterGetController {
 
   @GetMapping("/courses-counter")
   public Map<String, Integer> index() {
-    return finder.find();
+    final var response = finder.find();
+
+    return Map.of("total", response.getTotal());
   }
 }

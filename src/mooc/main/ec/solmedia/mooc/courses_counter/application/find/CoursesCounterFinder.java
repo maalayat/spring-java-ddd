@@ -2,7 +2,6 @@ package ec.solmedia.mooc.courses_counter.application.find;
 
 import ec.solmedia.mooc.courses_counter.domain.CoursesCounterRepository;
 import ec.solmedia.shared.domain.Service;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
@@ -14,9 +13,9 @@ public class CoursesCounterFinder {
     this.repository = repository;
   }
 
-  public Map<String, Integer> find() {
+  public CoursesCounterResponse find() {
     final var coursesCounter = repository.search().orElseThrow(NoSuchElementException::new);
 
-    return Map.of("total", coursesCounter.getTotal().value());
+    return new CoursesCounterResponse(coursesCounter.getTotal().value());
   }
 }
