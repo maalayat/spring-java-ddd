@@ -16,7 +16,7 @@ public final class QueryHandlersInformation {
   HashMap<Class<? extends Query>, Class<? extends QueryHandler>> indexedQueryHandlers;
 
   public QueryHandlersInformation() {
-    Reflections reflections = new Reflections("tv.codely");
+    Reflections reflections = new Reflections("ec.solmedia");
     Set<Class<? extends QueryHandler>> classes = reflections.getSubTypesOf(QueryHandler.class);
 
     indexedQueryHandlers = formatHandlers(classes);

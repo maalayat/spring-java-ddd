@@ -1,6 +1,8 @@
 package ec.solmedia.mooc.courses_counter.application.find;
 
-public class CoursesCounterResponse {
+import ec.solmedia.shared.domain.query.Response;
+
+public class CoursesCounterResponse implements Response {
 
   private final Integer total;
 

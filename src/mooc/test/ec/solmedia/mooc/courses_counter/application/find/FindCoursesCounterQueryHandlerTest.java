@@ -6,27 +6,35 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import ec.solmedia.mooc.courses_counter.CoursesCounterModuleUnitTestCase;
 import ec.solmedia.mooc.courses_counter.domain.CoursesCounterMother;
 import java.util.NoSuchElementException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 
-public class CoursesCounterFinderTest extends CoursesCounterModuleUnitTestCase {
+public class FindCoursesCounterQueryHandlerTest extends CoursesCounterModuleUnitTestCase {
 
   @InjectMocks
-  private CoursesCounterFinder finder;
+  private FindCoursesCounterQueryHandler handler;
+
+  @BeforeEach
+  void setUp() {
+    handler = new FindCoursesCounterQueryHandler(new CoursesCounterFinder(repository));
+  }
 
   @Test
   void shouldFindAnExistingCoursesCounter() {
     final var counter = CoursesCounterMother.random();
+    final var query = new FindCoursesCounterQuery();
 
     shouldMockSearch(counter);
 
-    assertEquals(3, finder.find().get("total"));
+    assertEquals(3, handler.handle(query).getTotal());
   }
 
   @Test
   void shouldThrowAnExceptionWhenCoursesCounterDoesNotExists() {
+    final var query = new FindCoursesCounterQuery();
     shouldMockSearch();
 
-    assertThrows(NoSuchElementException.class, () -> finder.find());
+    assertThrows(NoSuchElementException.class, () -> handler.handle(query));
   }
 }

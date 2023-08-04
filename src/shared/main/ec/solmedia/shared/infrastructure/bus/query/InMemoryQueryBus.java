@@ -5,8 +5,8 @@ import ec.solmedia.shared.domain.query.Query;
 import ec.solmedia.shared.domain.query.QueryBus;
 import ec.solmedia.shared.domain.query.QueryHandler;
 import ec.solmedia.shared.domain.query.QueryNotRegistered;
+import ec.solmedia.shared.domain.query.Response;
 import org.springframework.context.ApplicationContext;
-
 
 @Service
 public final class InMemoryQueryBus implements QueryBus {
@@ -20,11 +20,11 @@ public final class InMemoryQueryBus implements QueryBus {
   }
 
   @Override
-  public void ask(Query query) throws QueryNotRegistered {
+  public Response ask(Query query) throws QueryNotRegistered {
     Class<? extends QueryHandler> queryHandlerClass = information.search(query.getClass());
 
     QueryHandler handler = context.getBean(queryHandlerClass);
 
-    handler.handle(query);
+    return handler.handle(query);
   }
 }

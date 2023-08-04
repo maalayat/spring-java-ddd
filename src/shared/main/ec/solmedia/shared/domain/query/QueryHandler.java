@@ -1,7 +1,7 @@
 package ec.solmedia.shared.domain.query;
 
-public interface QueryHandler<T extends Query> {
+public interface QueryHandler<Q extends Query, R extends Response> {
 
-  void handle(T query);
+  R handle(Q query);
 
 }
