@@ -12,10 +12,6 @@ public abstract class Identifier implements Serializable {
     this.value = ensureValidUuid(value).toString();
   }
 
-  protected Identifier() {
-    this.value = null;
-  }
-
   public String value() {
     return value;
   }

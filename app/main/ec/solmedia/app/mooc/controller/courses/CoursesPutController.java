@@ -22,27 +22,13 @@ public class CoursesPutController {
   @PutMapping("/courses/{id}")
   public ResponseEntity<Object> create(@PathVariable String id, @RequestBody Request request)
       throws CommandNotRegistered {
-    commandBus.dispatch(new CourseCreateCommand(id, request.getName(), request.getDuration()));
+    commandBus.dispatch(new CourseCreateCommand(id, request.name(), request.duration()));
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
 }
 
-final class Request {
-  private final String name;
-  private final String duration;
+record Request(String name, String duration) {
 
-  public Request(String name, String duration) {
-    this.name = name;
-    this.duration = duration;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getDuration() {
-    return duration;
-  }
 }

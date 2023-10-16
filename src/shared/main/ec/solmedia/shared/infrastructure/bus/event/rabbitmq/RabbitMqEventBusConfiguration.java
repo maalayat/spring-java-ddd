@@ -39,7 +39,7 @@ public class RabbitMqEventBusConfiguration {
     final var retryDomainEventsExchange = new TopicExchange(retryExchangeName, true, false);
     final var deadLetterDomainEventsExchange = new TopicExchange(deadLetterExchangeName, true,
         false);
-    List<Declarable> declarables = new ArrayList<>();
+    final var declarables = new ArrayList<Declarable>();
     declarables.add(domainEventsExchange);
     declarables.add(retryDomainEventsExchange);
     declarables.add(deadLetterDomainEventsExchange);
@@ -48,7 +48,7 @@ public class RabbitMqEventBusConfiguration {
         domainEventsExchange,
         retryDomainEventsExchange,
         deadLetterDomainEventsExchange
-    ).stream().flatMap(Collection::stream).collect(Collectors.toList());
+    ).stream().flatMap(Collection::stream).toList();
 
     declarables.addAll(queuesAndBindings);
 
@@ -93,7 +93,7 @@ public class RabbitMqEventBusConfiguration {
                 .bind(queue)
                 .to(domainEventsExchange)
                 .with(eventName);
-          }).collect(Collectors.toList());
+          }).toList();
 
       List<Declarable> queuesAndBindings = new ArrayList<>();
       queuesAndBindings.add(queue);

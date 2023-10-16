@@ -21,6 +21,6 @@ public final class CoursesCounterGetController {
   public Map<String, Integer> index() throws QueryNotRegistered {
     final var response = queryBus.<CoursesCounterResponse>ask(new FindCoursesCounterQuery());
 
-    return Map.of("total", response.getTotal());
+    return Map.of("total", response.total());
   }
 }

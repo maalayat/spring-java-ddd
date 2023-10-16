@@ -10,7 +10,6 @@ import lombok.Setter;
 @Embeddable
 public final class CourseNameEntity {
 
-
   @Column(name = "name")
   private String name;
 

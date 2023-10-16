@@ -1,7 +1,6 @@
 package ec.solmedia.mooc.courses.infrastructure.entities;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
-import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

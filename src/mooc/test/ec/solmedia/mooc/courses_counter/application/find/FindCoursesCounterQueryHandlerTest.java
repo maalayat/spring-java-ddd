@@ -27,7 +27,7 @@ public class FindCoursesCounterQueryHandlerTest extends CoursesCounterModuleUnit
 
     shouldMockSearch(counter);
 
-    assertEquals(3, handler.handle(query).getTotal());
+    assertEquals(3, handler.handle(query).total());
   }
 
   @Test

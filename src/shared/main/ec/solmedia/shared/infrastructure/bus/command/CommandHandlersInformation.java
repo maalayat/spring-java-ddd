@@ -17,7 +17,6 @@ public final class CommandHandlersInformation {
 
   public CommandHandlersInformation() {
     final var reflections = new Reflections("ec.solmedia");
-//    Set<Class<? extends CommandHandler>> classes = reflections.getSubTypesOf(CommandHandler.class);
     final var classes = reflections.getSubTypesOf(CommandHandler.class);
 
     indexedCommandHandlers = formatHandlers(classes);
@@ -25,7 +24,6 @@ public final class CommandHandlersInformation {
 
   private HashMap<Class<? extends Command>, Class<? extends CommandHandler>> formatHandlers(
       Set<Class<? extends CommandHandler>> commandHandlers) {
-//    HashMap<Class<? extends Command>, Class<? extends CommandHandler>> handlers = new HashMap<>();
     final var handlers = new HashMap<Class<? extends Command>, Class<? extends CommandHandler>>();
 
     for (Class<? extends CommandHandler> handler : commandHandlers) {
@@ -40,7 +38,6 @@ public final class CommandHandlersInformation {
 
   public Class<? extends CommandHandler> search(Class<? extends Command> commandClass)
       throws CommandNotRegistered {
-//    Class<? extends CommandHandler> commandHandlerClass = indexedCommandHandlers.get(commandClass);
     final var commandHandlerClass = indexedCommandHandlers.get(commandClass);
 
     if (null == commandHandlerClass) {
