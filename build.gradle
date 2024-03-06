@@ -4,46 +4,39 @@ allprojects {
   apply plugin: 'io.spring.dependency-management'
   apply plugin: 'org.springframework.boot'
 
-  sourceCompatibility = 17
-  targetCompatibility = 17
+  java {
+    sourceCompatibility = '21'
+  }
 
   repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
   }
 
   ext {
-    set('springCloudVersion', "Hoxton.M3")
+    set('springCloudVersion', "2023.0.0")
   }
 
   dependencies {
-    // Prod
-    implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
-    implementation 'com.vlkan.log4j2:log4j2-logstash-layout:1.0.5'
-
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    // DB
+    // Mysql
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation "io.hypersistence:hypersistence-utils-hibernate-55:3.1.1"
     runtimeOnly 'com.mysql:mysql-connector-j'
-
-    // mapstruct
-    implementation 'org.mapstruct:mapstruct:1.5.1.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 
     // RabbitMq
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
-    // Hibernate-types
-    implementation 'com.vladmihalcea:hibernate-types-55:2.21.1'
+    // Mapstruct
+    implementation 'org.mapstruct:mapstruct:1.5.1.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     // Reflections
     implementation 'org.reflections:reflections:0.10.2'
 
     // Guava
-    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'com.google.guava:guava:33.0.0-jre'
 
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -120,7 +113,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:2.7.16")
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.2.3")
   }
 }
 

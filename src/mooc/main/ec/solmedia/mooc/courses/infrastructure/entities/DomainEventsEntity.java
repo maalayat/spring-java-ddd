@@ -1,23 +1,18 @@
 package ec.solmedia.mooc.courses.infrastructure.entities;
 
-import com.vladmihalcea.hibernate.type.json.JsonType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "domain_events")
-@TypeDef(
-    name = "json",
-    typeClass = JsonType.class
-)
 public class DomainEventsEntity {
 
   @Id
@@ -28,7 +23,7 @@ public class DomainEventsEntity {
 
   private String name;
 
-  @Type(type = "json")
+  @JdbcTypeCode(SqlTypes.LONGVARCHAR)
   @Column(columnDefinition = "json")
   private String body;
 
