@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  mysql:
+    container_name: spring-java-ddd-mysql
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    entrypoint:
+      sh -c "
+      echo 'CREATE DATABASE IF NOT EXISTS mooc;CREATE DATABASE IF NOT EXISTS backoffice;' > /docker-entrypoint-initdb.d/init.sql;
+      /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      "
+    command: [ "--default-authentication-plugin=mysql_native_password" ]
+
+  rabbitmq:
+    container_name: spring-java-ddd-rabbitmq
+    image: 'rabbitmq:3.7-management'
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
