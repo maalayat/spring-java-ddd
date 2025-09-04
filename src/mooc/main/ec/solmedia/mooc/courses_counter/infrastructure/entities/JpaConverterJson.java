@@ -9,14 +9,15 @@ import jakarta.persistence.Converter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 @Converter(autoApply = true)
 public class JpaConverterJson implements AttributeConverter<List<CourseIdEntity>, String> {
 
   private final static ObjectMapper objectMapper = new ObjectMapper();
+  private final static Logger log = LoggerFactory.getLogger(JpaConverterJson.class);
 
   @Override
   public String convertToDatabaseColumn(List<CourseIdEntity> list) {

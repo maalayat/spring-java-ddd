@@ -27,11 +27,6 @@ allprojects {
     // Mapstruct
     implementation 'org.mapstruct:mapstruct:1.5.1.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
-
-    // Lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
     // Reflections
     implementation 'org.reflections:reflections:0.10.2'
 

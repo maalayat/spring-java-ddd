@@ -5,11 +5,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.util.Objects;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "courses")
 public final class CourseEntity {
@@ -47,5 +43,29 @@ public final class CourseEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id, name, duration);
+  }
+
+  public CourseIdEntity getId() {
+    return id;
+  }
+
+  public void setId(CourseIdEntity id) {
+    this.id = id;
+  }
+
+  public CourseNameEntity getName() {
+    return name;
+  }
+
+  public void setName(CourseNameEntity name) {
+    this.name = name;
+  }
+
+  public CourseDurationEntity getDuration() {
+    return duration;
+  }
+
+  public void setDuration(CourseDurationEntity duration) {
+    this.duration = duration;
   }
 }

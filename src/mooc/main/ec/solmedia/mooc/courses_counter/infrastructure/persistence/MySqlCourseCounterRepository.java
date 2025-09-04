@@ -4,15 +4,18 @@ import ec.solmedia.mooc.courses_counter.domain.CoursesCounter;
 import ec.solmedia.mooc.courses_counter.domain.CoursesCounterRepository;
 import ec.solmedia.mooc.courses_counter.infrastructure.mapper.CoursesCounterMapper;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@AllArgsConstructor
 public class MySqlCourseCounterRepository implements CoursesCounterRepository {
 
   private final CourseCounterRepositoryImpl repository;
   private final CoursesCounterMapper mapper;
+
+  public MySqlCourseCounterRepository(CourseCounterRepositoryImpl repository, CoursesCounterMapper mapper) {
+    this.repository = repository;
+    this.mapper = mapper;
+  }
 
   @Override
   public void save(CoursesCounter coursesCounter) {

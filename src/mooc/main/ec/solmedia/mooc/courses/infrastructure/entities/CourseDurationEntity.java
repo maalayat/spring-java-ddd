@@ -2,11 +2,7 @@ package ec.solmedia.mooc.courses.infrastructure.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Embeddable
 public final class CourseDurationEntity {
 
@@ -20,4 +16,11 @@ public final class CourseDurationEntity {
     this.duration = value;
   }
 
+  public String getDuration() {
+    return duration;
+  }
+
+  public void setDuration(String duration) {
+    this.duration = duration;
+  }
 }

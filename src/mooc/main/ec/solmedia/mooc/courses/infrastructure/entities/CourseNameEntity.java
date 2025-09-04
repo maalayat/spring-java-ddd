@@ -2,11 +2,7 @@ package ec.solmedia.mooc.courses.infrastructure.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Embeddable
 public final class CourseNameEntity {
 
@@ -20,4 +16,11 @@ public final class CourseNameEntity {
     this.name = value;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }
