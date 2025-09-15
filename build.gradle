@@ -16,7 +16,7 @@ allprojects {
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        
+
         // Mysql
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         runtimeOnly 'com.mysql:mysql-connector-j'
@@ -38,8 +38,7 @@ allprojects {
 
         // Test
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'com.github.javafaker:javafaker:0.12'
-        testImplementation 'com.github.javafaker:javafaker:0.12:javadoc'
+        testImplementation("net.datafaker:datafaker:2.4.4")
         testImplementation 'org.springframework.boot:spring-boot-testcontainers'
         testImplementation 'org.springframework.amqp:spring-rabbit-test'
         testImplementation 'org.testcontainers:junit-jupiter'
