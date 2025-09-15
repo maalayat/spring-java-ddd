@@ -5,18 +5,18 @@ allprojects {
     apply plugin: 'org.springframework.boot'
 
     java {
-        sourceCompatibility = '21'
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(24)
+        }
     }
 
     repositories {
         mavenCentral()
     }
 
-    ext {
-        set('springCloudVersion', "2023.0.0")
-    }
-
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        
         // Mysql
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         runtimeOnly 'com.mysql:mysql-connector-j'
@@ -45,12 +45,6 @@ allprojects {
         testImplementation 'org.testcontainers:junit-jupiter'
         testImplementation 'org.testcontainers:mysql'
         testImplementation 'org.testcontainers:rabbitmq'
-    }
-
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-        }
     }
 
     test {
@@ -116,7 +110,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:3.2.3")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.5")
     }
 }
 
