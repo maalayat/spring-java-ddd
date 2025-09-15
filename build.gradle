@@ -1,127 +1,135 @@
 // Common for all projects
 allprojects {
-  apply plugin: 'java'
-  apply plugin: 'io.spring.dependency-management'
-  apply plugin: 'org.springframework.boot'
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
 
-  java {
-    sourceCompatibility = '21'
-  }
-
-  repositories {
-    mavenCentral()
-  }
-
-  ext {
-    set('springCloudVersion', "2023.0.0")
-  }
-
-  dependencies {
-    // Mysql
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-
-    // RabbitMq
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
-
-    // Mapstruct
-    implementation 'org.mapstruct:mapstruct:1.5.1.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
-    // Reflections
-    implementation 'org.reflections:reflections:0.10.2'
-
-    // Guava
-    implementation 'com.google.guava:guava:33.0.0-jre'
-
-    // Test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'com.github.javafaker:javafaker:0.12'
-    testImplementation 'com.github.javafaker:javafaker:0.12:javadoc'
-  }
-
-  dependencyManagement {
-    imports {
-      mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    java {
+        sourceCompatibility = '21'
     }
-  }
 
-  test {
-    useJUnitPlatform()
-
-    testLogging {
-      events "passed", "skipped", "failed"
+    repositories {
+        mavenCentral()
     }
-  }
 
-
-  task view_paths {
-    doLast { task ->
-      println "$task.project.name"
-      println "------------------"
-      println "Main: $sourceSets.main.java.srcDirTrees"
-      println "   Resources: $sourceSets.main.resources.srcDirTrees"
-      println "Tests: $sourceSets.test.java.srcDirTrees"
-      println "   Resources: $sourceSets.test.resources.srcDirTrees"
+    ext {
+        set('springCloudVersion', "2023.0.0")
     }
-  }
+
+    dependencies {
+        // Mysql
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        runtimeOnly 'com.mysql:mysql-connector-j'
+
+        // RabbitMq
+        implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+        // Mapstruct
+        implementation 'org.mapstruct:mapstruct:1.5.1.Final'
+        annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
+        // Reflections
+        implementation 'org.reflections:reflections:0.10.2'
+
+        // Guava
+        implementation 'com.google.guava:guava:33.0.0-jre'
+
+        // Docker Compose
+        developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+        // Test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'com.github.javafaker:javafaker:0.12'
+        testImplementation 'com.github.javafaker:javafaker:0.12:javadoc'
+        testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+        testImplementation 'org.springframework.amqp:spring-rabbit-test'
+        testImplementation 'org.testcontainers:junit-jupiter'
+        testImplementation 'org.testcontainers:mysql'
+        testImplementation 'org.testcontainers:rabbitmq'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+
+    task view_paths {
+        doLast { task ->
+            println "$task.project.name"
+            println "------------------"
+            println "Main: $sourceSets.main.java.srcDirTrees"
+            println "   Resources: $sourceSets.main.resources.srcDirTrees"
+            println "Tests: $sourceSets.test.java.srcDirTrees"
+            println "   Resources: $sourceSets.test.resources.srcDirTrees"
+        }
+    }
 }
 
 // All subprojects (located in src/*)
 subprojects {
-  group = "ec.solmedia.${rootProject.name}"
+    group = "ec.solmedia.${rootProject.name}"
 
-  sourceSets {
-    main {
-      java { srcDirs = ['main'] }
-      resources { srcDirs = ['main/resources'] }
+    sourceSets {
+        main {
+            java { srcDirs = ['main'] }
+            resources { srcDirs = ['main/resources'] }
+        }
+
+        test {
+            java { srcDirs = ['test'] }
+            resources { srcDirs = ['test/resources'] }
+        }
     }
 
-    test {
-      java { srcDirs = ['test'] }
-      resources { srcDirs = ['test/resources'] }
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-web")
+
+        testImplementation rootProject.sourceSets.main.output
+
+        if (project.name != "shared") {
+            implementation project(":shared")
+            testImplementation project(":shared").sourceSets.test.output
+        }
     }
-  }
 
-  dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-
-    testImplementation rootProject.sourceSets.main.output
-
-    if (project.name != "shared") {
-      implementation project(":shared")
-      testImplementation project(":shared").sourceSets.test.output
+    bootJar {
+        enabled = false
     }
-  }
 
-  bootJar {
-    enabled = false
-  }
-
-  jar {
-    enabled = true
-  }
+    jar {
+        enabled = true
+    }
 }
 
 // Main project (located in app/)
 buildscript {
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.2.3")
-  }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:3.2.3")
+    }
 }
 
 sourceSets {
-  main {
-    java { srcDirs = ['app/main'] }
-    resources { srcDirs = ['app/main/resources'] }
-  }
+    main {
+        java { srcDirs = ['app/main'] }
+        resources { srcDirs = ['app/main/resources'] }
+    }
 
-  test {
-    java { srcDirs = ['app/test'] }
-    resources { srcDirs = ['app/test/resources'] }
-  }
+    test {
+        java { srcDirs = ['app/test'] }
+        resources { srcDirs = ['app/test/resources'] }
+    }
 }
 
 apply plugin: 'application'
@@ -129,11 +137,11 @@ apply plugin: 'application'
 mainClassName = 'ec.solmedia.app.Starter'
 
 dependencies {
-  implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
-  implementation project(":shared")
-  implementation project(":backoffice")
-  implementation project(":mooc")
+    implementation project(":shared")
+    implementation project(":backoffice")
+    implementation project(":mooc")
 
 }
 
