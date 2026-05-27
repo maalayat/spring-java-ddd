@@ -107,9 +107,10 @@ subprojects {
 buildscript {
     repositories {
         mavenCentral()
+        maven { url = 'https://repo.spring.io/snapshot' }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.5")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.14")
     }
 }
 
