@@ -1,0 +1,19 @@
+### Health check
+GET http://localhost:8080/actuator/health
+Accept: application/vnd.spring-boot.actuator.v3+json
+
+### Create course
+< {%
+  const id = $random.uuid
+  client.global.set("courseId", id)
+%}
+PUT http://localhost:8080/courses/{{courseId}}
+Content-Type: application/json
+
+{
+  "name": "{{$random.educator.course}}",
+  "duration": "5 hours"
+}
+
+### Get courses counter
+GET http://localhost:8080/courses-counter
