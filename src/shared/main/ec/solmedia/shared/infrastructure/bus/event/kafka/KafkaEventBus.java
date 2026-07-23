@@ -30,16 +30,20 @@ public class KafkaEventBus implements EventBus {
     try {
       kafkaTemplate.send(domainEvent.eventName(), domainEvent.eventId(), domainEvent).get();
     } catch (KafkaException exception) {
-      failoverPublisher.publish(Collections.singletonList(domainEvent));
+      publishToFailover(domainEvent);
     } catch (ExecutionException exception) {
       if (exception.getCause() instanceof KafkaException) {
-        failoverPublisher.publish(Collections.singletonList(domainEvent));
+        publishToFailover(domainEvent);
       } else {
         throw new RuntimeException(exception);
       }
     } catch (InterruptedException exception) {
       Thread.currentThread().interrupt();
-      failoverPublisher.publish(Collections.singletonList(domainEvent));
+      throw new RuntimeException(exception);
     }
+  }
+
+  private void publishToFailover(DomainEvent domainEvent) {
+    failoverPublisher.publish(Collections.singletonList(domainEvent));
   }
 }
