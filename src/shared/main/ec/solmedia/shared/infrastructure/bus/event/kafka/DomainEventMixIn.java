@@ -7,9 +7,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public interface DomainEventMixIn {
 
-  static ObjectMapper objectMapper() {
+  ObjectMapper OBJECT_MAPPER = createObjectMapper();
+
+  static ObjectMapper createObjectMapper() {
     ObjectMapper mapper = new ObjectMapper();
     mapper.addMixIn(DomainEvent.class, DomainEventMixIn.class);
     return mapper;
+  }
+
+  static ObjectMapper objectMapper() {
+    return OBJECT_MAPPER;
   }
 }

@@ -6,6 +6,7 @@ import ec.solmedia.shared.domain.event.bus.EventBus;
 import ec.solmedia.shared.infrastructure.bus.event.mysql.MySqlEventBus;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import org.apache.kafka.common.KafkaException;
 import org.springframework.kafka.core.KafkaTemplate;
 
@@ -27,8 +28,17 @@ public class KafkaEventBus implements EventBus {
 
   private void publish(DomainEvent domainEvent) {
     try {
-      kafkaTemplate.send(domainEvent.eventName(), domainEvent.eventId(), domainEvent);
+      kafkaTemplate.send(domainEvent.eventName(), domainEvent.eventId(), domainEvent).get();
     } catch (KafkaException exception) {
+      failoverPublisher.publish(Collections.singletonList(domainEvent));
+    } catch (ExecutionException exception) {
+      if (exception.getCause() instanceof KafkaException) {
+        failoverPublisher.publish(Collections.singletonList(domainEvent));
+      } else {
+        throw new RuntimeException(exception);
+      }
+    } catch (InterruptedException exception) {
+      Thread.currentThread().interrupt();
       failoverPublisher.publish(Collections.singletonList(domainEvent));
     }
   }

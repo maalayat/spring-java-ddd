@@ -3,6 +3,7 @@ package ec.solmedia.mooc.shared.infrastructure.bus.event.kafka;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import ec.solmedia.mooc.courses.domain.CourseCreatedDomainEvent;
 import ec.solmedia.mooc.courses.domain.CourseCreatedDomainEventMother;
@@ -12,6 +13,7 @@ import ec.solmedia.shared.infrastructure.UnitTestCase;
 import ec.solmedia.shared.infrastructure.bus.event.kafka.KafkaEventBus;
 import ec.solmedia.shared.infrastructure.bus.event.mysql.MySqlEventBus;
 import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
 import org.apache.kafka.common.KafkaException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,8 @@ import org.mockito.Mock;
 import org.springframework.kafka.core.KafkaTemplate;
 
 public class KafkaEventBusTest extends UnitTestCase {
+
+  private static final String COURSE_CREATED_TOPIC = "course.created";
 
   @Mock
   private KafkaTemplate<String, DomainEvent> kafkaTemplate;
@@ -30,11 +34,13 @@ public class KafkaEventBusTest extends UnitTestCase {
   @DisplayName("Given a course created domain event when publish through kafka event bus then it sends it to the course.created topic")
   void shouldPublishCourseCreatedDomainEventToKafkaTopic() {
     final var event = CourseCreatedDomainEventMother.random();
+    when(kafkaTemplate.send(COURSE_CREATED_TOPIC, event.eventId(), event))
+        .thenReturn(CompletableFuture.completedFuture(null));
     final EventBus eventBus = new KafkaEventBus(kafkaTemplate, mySqlEventBus);
 
     eventBus.publish(Collections.singletonList(event));
 
-    verify(kafkaTemplate, atLeastOnce()).send("course.created", event.eventId(), event);
+    verify(kafkaTemplate, atLeastOnce()).send(COURSE_CREATED_TOPIC, event.eventId(), event);
   }
 
   @Test
@@ -43,7 +49,7 @@ public class KafkaEventBusTest extends UnitTestCase {
     final var event = CourseCreatedDomainEventMother.random();
     doThrow(new KafkaException("Kafka failure"))
         .when(kafkaTemplate)
-        .send("course.created", event.eventId(), event);
+        .send(COURSE_CREATED_TOPIC, event.eventId(), event);
     final EventBus eventBus = new KafkaEventBus(kafkaTemplate, mySqlEventBus);
 
     eventBus.publish(Collections.singletonList(event));
