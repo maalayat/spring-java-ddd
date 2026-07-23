@@ -24,6 +24,9 @@ allprojects {
         // RabbitMq
         implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
+        // Kafka
+        implementation 'org.springframework.kafka:spring-kafka'
+
         // Mapstruct
         implementation 'org.mapstruct:mapstruct:1.5.1.Final'
         annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
