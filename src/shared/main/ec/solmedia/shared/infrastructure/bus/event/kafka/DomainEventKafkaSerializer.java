@@ -1,8 +1,8 @@
 package ec.solmedia.shared.infrastructure.bus.event.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import java.nio.charset.StandardCharsets;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 

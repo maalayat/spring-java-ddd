@@ -1,8 +1,8 @@
 package ec.solmedia.shared.infrastructure.bus.event.kafka;
 
+import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ec.solmedia.shared.domain.event.bus.DomainEvent;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public interface DomainEventMixIn {

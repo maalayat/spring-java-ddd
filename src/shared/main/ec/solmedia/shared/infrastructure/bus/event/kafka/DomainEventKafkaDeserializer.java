@@ -1,7 +1,5 @@
 package ec.solmedia.shared.infrastructure.bus.event.kafka;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import java.io.IOException;
 import org.apache.kafka.common.errors.SerializationException;
