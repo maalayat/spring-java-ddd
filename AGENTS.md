@@ -16,7 +16,7 @@ Tests and application require MySQL. Use Docker:
 ```bash
 docker run --name mysql-ddd -p3306:3306 -e MYSQL_ROOT_PASSWORD=yourpassword -d mysql:8.0.31
 ```
-Or use docker-compose: `docker-compose up mysql`
+Or use docker-compose: `docker compose up`
 
 Update database configuration in `app/main/resources/application.properties`.
 
@@ -65,7 +65,7 @@ This is a **Domain-Driven Design (DDD)** project with **hexagonal architecture**
 - All domain classes are `final` and immutable where possible
 - Value Objects extend `StringValueObject` or `IntValueObject` from shared module
 - Aggregates extend `AggregateRoot` and record domain events via `record()` method
-- Domain Events extend `DomainEvent` and implement `Serializable`
+- Domain Events extend `DomainEvent` and remain infrastructure-free
 - Application Services use `@Service` from shared module (NOT Spring's)
 - Repository implementations use `@Primary` annotation and composition pattern
 
