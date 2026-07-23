@@ -1,4 +1,4 @@
-# PRD: Migrate Domain Event Bus from RabbitMQ to Kafka
+# Spec: Migrate Domain Event Bus from RabbitMQ to Kafka
 
 ## Problem Statement
 
@@ -115,19 +115,52 @@ The `type` field enables future consumers that subscribe to multiple topics or r
 
 ## Testing Decisions
 
-### Testing Philosophy
+### The Primary Seam
 
-Tests should verify external behavior (events are published, events are received, dead-letter fallback works) without probing internal implementation details. Avoid testing serialization format strings directly — test round-trip: serialize then deserialize produces an equal event.
+The highest existing seam is the `EventBus` interface — `void publish(List<DomainEvent>)`. This single seam spans the entire producer-to-consumer pipeline without exposing Kafka, Jackson, RabbitMQ, or serialization details. We will test the migration by driving behavior through this seam and observing side effects at the other end.
 
-### Modules to Test
+### Producer-side seam test
 
-| Module | Test Type | What to Verify |
-|---|---|---|
-| `KafkaEventBus` | Unit | Publishes events via KafkaTemplate; falls back to MySqlEventBus on KafkaException |
-| `DomainEventKafkaSerializer` | Unit | Produces valid JSON envelope; all fields present |
-| `DomainEventKafkaDeserializer` | Unit | Round-trip: serialize → deserialize produces equal event; unknown type throws |
-| `KafkaEventBus` + consumers | Integration | End-to-end: publish via EventBus → consumer receives via @KafkaListener, using embedded Kafka (Testcontainers) |
-| `CourseCreatedKafkaConsumer` | Unit | Calls `IncrementCoursesCounterOnCourseCreated.on()` with deserialized event |
+Unit-test `KafkaEventBus` through the `EventBus` seam:
+
+- Inject a mock `KafkaTemplate` and a stub `MySqlEventBus`
+- Call `eventBus.publish(List.of(courseCreatedEvent))`
+- Verify `KafkaTemplate.send("course.created", ...)` was called once with a serialized JSON envelope containing the correct `type`, `aggregateId`, and event attributes
+- Force `KafkaTemplate.send()` to throw `KafkaException` and verify `MySqlEventBus` receives the event for dead-letter storage
+
+This test does not assert on the exact byte contents of the envelope string. It asserts on the external contract: correct topic and a deserializable envelope.
+
+### Consumer-side seam test
+
+Unit-test `CourseCreatedKafkaConsumer` through its own seam — the `on(CourseCreatedDomainEvent)` method of the application service it delegates to:
+
+- Construct a `CourseCreatedDomainEvent` directly (no broker, no JSON)
+- Call the consumer with the event
+- Verify the application service's `on()` method is called exactly once with the same event
+
+This isolates the wiring between infrastructure and application layers.
+
+### End-to-end seam test
+
+One integration test drives the full flow through the `EventBus` seam using an embedded Kafka broker:
+
+- Invoke `CourseCreator.create(...)` — this calls `eventBus.publish(pullDomainEvents())`
+- Assert that the `CoursesCounter` read model is eventually incremented, or that `IncrementCoursesCounterOnCourseCreated.on()` was invoked
+
+This single test proves serialization, topic routing, Kafka delivery, deserialization, and consumer invocation work together without exposing any of those layers in the assertion.
+
+### What makes a good test
+
+Tests should verify external behavior at a seam, not implementation details. Do not assert on:
+- Exact JSON string formatting
+- Whether a specific private method was called
+- Reflection-based discovery state
+
+Do assert on:
+- Events arrive at the expected Kafka topic
+- The envelope round-trips correctly
+- Dead-letter fallback fires on persistent failure
+- The downstream business effect occurs when an event is consumed
 
 ### Prior Art
 
@@ -137,9 +170,9 @@ Tests should verify external behavior (events are published, events are received
 
 ## Out of Scope
 
-- Migration of the CQRS command and query buses to Kafka or removal of `org.reflections` — those remain unchanged and are outside this PRD
+- Migration of the CQRS command and query buses to Kafka or removal of `org.reflections` — those remain unchanged and are outside this spec
 - Removal of `SpringApplicationEventBus` — retained for future in-process event use cases
-- Adding Kafka to the Docker Compose or local development setup — the developer must provide a Kafka broker; this PRD covers code changes only
+- Adding Kafka to the Docker Compose or local development setup — the developer must provide a Kafka broker; this spec covers code changes only
 - Schema registry or Avro/Protobuf serialization — Jackson JSON is sufficient for the current event volume and complexity
 - Migration of existing RabbitMQ messages from the broker — this is a clean cutover; no message replay from RabbitMQ queues is planned
 - Retrofitting tests for existing code uncovered by this migration
