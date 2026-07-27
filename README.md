@@ -13,7 +13,7 @@ maintainable application.
 - **Spring Boot**: The application is built on top of the Spring Boot framework, providing a robust
   and efficient development experience.
 - **Docker Compose**: The project uses Docker Compose to manage the required services (MySQL and
-  RabbitMQ), making it easy to set up and run.
+  Kafka), making it easy to set up and run.
 
 ## 🚀 Stack
 
@@ -21,7 +21,7 @@ maintainable application.
 - **Spring Boot**
 - **Gradle**
 - **MySQL**
-- **RabbitMQ**
+- **Kafka**
 - **Docker**
 
 ## ✅ Prerequisites

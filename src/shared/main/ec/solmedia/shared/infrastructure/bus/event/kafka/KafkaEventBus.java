@@ -8,9 +8,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import org.apache.kafka.common.KafkaException;
+import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.core.KafkaTemplate;
 
 @Service
+@Primary
 public class KafkaEventBus implements EventBus {
 
   private final KafkaTemplate<String, DomainEvent> kafkaTemplate;

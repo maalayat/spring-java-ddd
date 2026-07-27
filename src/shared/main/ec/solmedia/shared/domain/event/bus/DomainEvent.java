@@ -1,8 +1,6 @@
 package ec.solmedia.shared.domain.event.bus;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class DomainEvent {
@@ -24,17 +22,6 @@ public abstract class DomainEvent {
   }
 
   public abstract String eventName();
-
-  public abstract HashMap<String, Serializable> toPrimitives();
-
-  public abstract String toJson();
-
-  public abstract DomainEvent fromPrimitives(
-      String aggregateId,
-      HashMap<String, Serializable> body,
-      String eventId,
-      String occurredOn
-  );
 
   public String aggregateId() {
     return aggregateId;

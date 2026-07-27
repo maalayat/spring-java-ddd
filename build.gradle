@@ -21,9 +21,6 @@ allprojects {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         runtimeOnly 'com.mysql:mysql-connector-j'
 
-        // RabbitMq
-        implementation 'org.springframework.boot:spring-boot-starter-amqp'
-
         // Kafka
         implementation 'org.springframework.kafka:spring-kafka'
 
@@ -33,9 +30,6 @@ allprojects {
         // Reflections
         implementation 'org.reflections:reflections:0.10.2'
 
-        // Guava
-        implementation 'com.google.guava:guava:33.0.0-jre'
-
         // Docker Compose
         developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
@@ -43,10 +37,9 @@ allprojects {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation("net.datafaker:datafaker:2.4.4")
         testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-        testImplementation 'org.springframework.amqp:spring-rabbit-test'
         testImplementation 'org.testcontainers:junit-jupiter'
         testImplementation 'org.testcontainers:mysql'
-        testImplementation 'org.testcontainers:rabbitmq'
+        testImplementation 'org.testcontainers:kafka'
     }
 
     test {
