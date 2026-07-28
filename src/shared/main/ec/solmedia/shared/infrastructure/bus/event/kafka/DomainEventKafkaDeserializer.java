@@ -1,10 +1,11 @@
 package ec.solmedia.shared.infrastructure.bus.event.kafka;
 
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 

@@ -2,6 +2,7 @@ package ec.solmedia.mooc.infrastructure.bus.event.kafka;
 
 import ec.solmedia.mooc.courses.domain.CourseCreatedDomainEvent;
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

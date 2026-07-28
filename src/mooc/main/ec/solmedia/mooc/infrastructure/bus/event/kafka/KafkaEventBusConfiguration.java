@@ -4,9 +4,10 @@ import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import ec.solmedia.shared.infrastructure.bus.event.kafka.DomainEventEnvelopeSerializer;
 import ec.solmedia.shared.infrastructure.bus.event.kafka.DomainEventKafkaDeserializer;
 import ec.solmedia.shared.infrastructure.bus.event.kafka.DomainEventKafkaSerializer;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -38,7 +39,8 @@ public class KafkaEventBusConfiguration {
   }
 
   @Bean
-  public DomainEventKafkaSerializer domainEventKafkaSerializer(DomainEventEnvelopeSerializer domainEventEnvelopeSerializer) {
+  public DomainEventKafkaSerializer domainEventKafkaSerializer(
+      DomainEventEnvelopeSerializer domainEventEnvelopeSerializer) {
     return new DomainEventKafkaSerializer(domainEventEnvelopeSerializer);
   }
 
@@ -86,7 +88,7 @@ public class KafkaEventBusConfiguration {
   @Primary
   public ConcurrentKafkaListenerContainerFactory<String, DomainEvent> kafkaListenerContainerFactory(
       ConsumerFactory<String, DomainEvent> domainEventConsumerFactory) {
-    ConcurrentKafkaListenerContainerFactory<String, DomainEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    var factory = new ConcurrentKafkaListenerContainerFactory<String, DomainEvent>();
     factory.setConsumerFactory(domainEventConsumerFactory);
 
     return factory;

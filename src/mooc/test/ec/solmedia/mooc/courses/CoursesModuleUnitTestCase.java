@@ -9,7 +9,9 @@ import ec.solmedia.mooc.courses.application.create.CourseCreator;
 import ec.solmedia.mooc.courses.domain.Course;
 import ec.solmedia.mooc.courses.domain.CourseCreatedDomainEvent;
 import ec.solmedia.mooc.courses.domain.CourseRepository;
+import ec.solmedia.shared.domain.event.bus.DomainEvent;
 import ec.solmedia.shared.infrastructure.UnitTestCase;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,7 +34,7 @@ public abstract class CoursesModuleUnitTestCase extends UnitTestCase {
   }
 
   protected void shouldHavePublished(CourseCreatedDomainEvent expectedEvent) {
-    verify(eventBus, atLeastOnce()).publish(argThat(events ->
+    verify(eventBus, atLeastOnce()).publish(argThat((List<DomainEvent> events) ->
         events.stream().anyMatch(event ->
             event instanceof CourseCreatedDomainEvent publishedEvent
                 && expectedEvent.aggregateId().equals(publishedEvent.aggregateId())
@@ -41,5 +43,4 @@ public abstract class CoursesModuleUnitTestCase extends UnitTestCase {
         )
     ));
   }
-
 }
