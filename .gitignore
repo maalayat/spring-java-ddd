@@ -10,3 +10,5 @@ gradle-app.setting
 
 /var/log/*
 !/var/log/.gitkeep
+skills-lock.json
+.codegraph/.gitignore
