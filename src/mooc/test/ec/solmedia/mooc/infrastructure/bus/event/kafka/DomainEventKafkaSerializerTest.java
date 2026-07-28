@@ -3,7 +3,6 @@ package ec.solmedia.mooc.infrastructure.bus.event.kafka;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ec.solmedia.mooc.courses.CoursesModuleUnitTestCase;
-import ec.solmedia.mooc.courses.domain.CourseCreatedDomainEvent;
 import ec.solmedia.mooc.courses.domain.CourseCreatedDomainEventMother;
 import ec.solmedia.shared.infrastructure.bus.event.kafka.DomainEventEnvelopeSerializer;
 import ec.solmedia.shared.infrastructure.bus.event.kafka.DomainEventKafkaSerializer;

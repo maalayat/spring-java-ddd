@@ -1,10 +1,11 @@
 package ec.solmedia.shared.infrastructure.bus.event.kafka;
 
 import ec.solmedia.shared.domain.event.bus.DomainEvent;
-import java.util.HashMap;
-import java.util.Map;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DomainEventEnvelopeSerializer {
 
